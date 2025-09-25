@@ -1,2 +1,2 @@
-# Ozodbe
+# Ozodbek
 Birinchi saytim
