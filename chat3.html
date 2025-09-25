@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <title>Oddiy Audio Player</title>
+  <style>
+    #player { margin-top: 20px; }
+    button { margin: 5px; padding: 8px 12px; }
+  </style>
+</head>
+<body>
+  <h1>Mening qo‘shiqlarim</h1>    
+
+  <div id="player">
+    <p id="song-title">Hech qanday qo‘shiq tanlanmagan</p>
+    <audio id="audio" controls></audio><br>
+    <button onclick="prevSong()">⏮ Oldingi</button>
+    <button onclick="playPause()">▶/⏸ Play/Pause</button>
+    <button onclick="nextSong()">⏭ Keyingi</button>
+  </div>
+
+  <script>
+    // Qo‘shiqlar ro‘yxati
+    const songs = [
+      { title: "Qo‘shiq 1", file: "songs/azadomar.mp3" },
+      { title: "Qo‘shiq 2", file: "songs/Ecveezer.mp3" },
+      
+    ];
+
+    let currentSong = 0;
+    const audio = document.getElementById("audio");
+    const title = document.getElementById("song-title");
+
+    // Qo‘shiqni yuklash
+    function loadSong(index) {
+      audio.src = songs[index].file;
+      title.textContent = songs[index].title;
+      audio.play();
+    }
+
+    // Play / Pause
+    function playPause() {
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+
+    // Oldingi qo‘shiq
+    function prevSong() {
+      currentSong = (currentSong - 1 + songs.length) % songs.length;
+      loadSong(currentSong);
+    }
+
+    // Keyingi qo‘shiq
+    function nextSong() {
+      currentSong = (currentSong + 1) % songs.length;
+      loadSong(currentSong);
+    }
+
+    // Avtomatik keyingi qo‘shiq
+    audio.addEventListener("ended", nextSong);
+
+    // Dastlabki qo‘shiqni yuklash
+    loadSong(currentSong);
+  </script>
+</body>
+</html>
